@@ -1,0 +1,56 @@
+1. Create Artificial Data
+2. Stop/Start machine and see if it works
+3. Add comments and refactor
+
+
+
+------------------
+Deploy on AWS
+
+1. install vim
+sudo yum install vim
+2. install telnet
+sudo yum install telnet
+2. install java
+sudo yum localinstall jdk-8u151-linux-x64.rpm
+3  Install redis on aws (https://medium.com/@andrewcbass/install-redis-v3-2-on-aws-ec2-instance-93259d40a3ce)
+4. install redis commander (https://stackoverflow.com/questions/8205369/installing-npm-on-aws-ec2)
+sudo npm install -g redis-commander
+4. install confluent
+6. edit ./etc/kafka/server.properties - changed advertised host, and enable deletion of topic
+7. install imply
+6. Disable caching and set refresh rate to 1 min on pivot UI
+
+
+
+--------------------------------
+Commands for AWS setup
+
+
+New things to try
+------------------
+0. Storm cleanup
+1. Joining of streams
+2. java script maps
+3. presentation/ppt
+4. generate datasets with more data in druid
+5. finalize colors
+new
+6. write main method in visualization classes
+7. use some env variable for IP on AWS
+8. revisit batch version 2
+9. why realtime tasks are taking so long to finish
+
+----- Flume - read from kafka and write to file as well as druid
+event time vs processing time
+lambda architecture
+concerns
+event time shud be considered
+late events shud be handled by batch and correct data in druid eventually
+what if one bolt is slow and other is fast
+
+
+---------------------------------------------------
+
+start imply
+ bin/supervise -c conf/supervise/quickstart.conf

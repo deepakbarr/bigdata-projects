@@ -1,0 +1,43 @@
+
+
+Start Kafka server
+
+./bin/kafka-server-start ./etc/kafka/server.properties
+
+
+
+
+
+Start Zookeeper
+
+./bin/zookeeper-server-start ./etc/kafka/zookeeper.properties
+
+
+
+
+Start imply
+
+bin/supervise -c conf/supervise/quickstart.conf
+wait 10 sec
+
+bin/tranquility kafka -configFile conf-quickstart/tranquility/kafka.json
+
+
+List topics
+
+./bin/kafka-topics --zookeeper localhost:2181 --list
+
+
+
+Create topic
+
+./bin/kafka-topics --create --zookeeper localhost:2181 --partitions 1 --replication-factor 1  --topic supply_topic
+
+
+
+Get topic offset
+
+bin/kafka-run-class kafka.tools.GetOffsetShell --broker-list 52.39.226.4:9092  --time -1 --topic supply_topic2
+
+Read topic data
+bin/kafka-console-consumer --bootstrap-server localhost:9092 --from-beginning --property print.key=true --property print.value=true --topic supply_topic

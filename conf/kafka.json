@@ -1,0 +1,196 @@
+{
+  "dataSources" : [
+    {
+      "spec" : {
+        "dataSchema" : {
+          "dataSource" : "tutorial-tranquility-kafka",
+          "parser" : {
+            "type" : "string",
+            "parseSpec" : {
+              "timestampSpec" : {
+                "column" : "timestamp",
+                "format" : "auto"
+              },
+              "dimensionsSpec" : {
+                "dimensions" : [],
+                "dimensionExclusions" : [
+                  "timestamp",
+                  "value"
+                ]
+              },
+              "format" : "json"
+            }
+          },
+          "granularitySpec" : {
+            "type" : "uniform",
+            "segmentGranularity" : "hour",
+            "queryGranularity" : "none"
+          },
+          "metricsSpec" : [
+            {
+              "type" : "count",
+              "name" : "count"
+            },
+            {
+              "name" : "value_sum",
+              "type" : "doubleSum",
+              "fieldName" : "value"
+            },
+            {
+              "fieldName" : "value",
+              "name" : "value_min",
+              "type" : "doubleMin"
+            },
+            {
+              "type" : "doubleMax",
+              "name" : "value_max",
+              "fieldName" : "value"
+            }
+          ]
+        },
+        "ioConfig" : {
+          "type" : "realtime"
+        },
+        "tuningConfig" : {
+          "type" : "realtime",
+          "maxRowsInMemory" : "50000",
+          "intermediatePersistPeriod" : "PT10M",
+          "windowPeriod" : "PT10M"
+        }
+      },
+      "properties" : {
+        "task.partitions" : "1",
+        "task.replicants" : "1",
+        "topicPattern" : "tutorial-tranquility-kafka"
+      }
+    },
+     {
+      "spec" : {
+        "dataSchema" : {
+          "dataSource" : "supply_demand_data",
+          "parser" : {
+            "type" : "string",
+            "parseSpec" : {
+              "timestampSpec" : {
+                "column" : "timestamp",
+                "format" : "auto"
+              },
+              "dimensionsSpec" : {
+                "dimensions" : [
+                    "geohash",
+                    "weather"
+                ],
+                "dimensionExclusions" : []
+              },
+              "format" : "json"
+            }
+          },
+          "granularitySpec" : {
+            "type" : "uniform",
+            "segmentGranularity" : "minute",
+            "queryGranularity" : "hour"
+          },
+          "metricsSpec" : [
+            {
+              "type" : "doubleSum",
+              "name" : "supply",
+              "fieldName" : "supply"
+            },
+            {
+              "type" : "doubleSum",
+              "name" : "demand",
+              "fieldName" : "demand"
+            }
+          ]
+        },
+        "ioConfig" : {
+          "type" : "realtime"
+        },
+        "tuningConfig" : {
+          "type" : "realtime",
+          "maxRowsInMemory" : "50000",
+          "intermediatePersistPeriod" : "PT1M",
+          "windowPeriod" : "PT1M",
+          "rejectionPolicy": {
+             "type": "serverTime"
+          }
+        }
+      },
+      "properties" : {
+        "task.partitions" : "1",
+        "task.replicants" : "1",
+        "topicPattern" : "batch_output"
+      }
+    },
+    {
+      "spec" : {
+        "dataSchema" : {
+          "dataSource" : "traffic_data",
+          "parser" : {
+            "type" : "string",
+            "parseSpec" : {
+              "timestampSpec" : {
+                "column" : "timestamp",
+                "format" : "auto"
+              },
+              "dimensionsSpec" : {
+                "dimensions" : [
+                    "geohash",
+                    "weather"
+                ],
+                "dimensionExclusions" : []
+              },
+              "format" : "json"
+            }
+          },
+          "granularitySpec" : {
+            "type" : "uniform",
+            "segmentGranularity" : "minute",
+            "queryGranularity" : "none"
+          },
+          "metricsSpec" : [
+            {
+              "type" : "doubleSum",
+              "name" : "avgspeed",
+              "fieldName" : "avgspeed"
+            },
+            {
+              "type" : "doubleSum",
+              "name" : "normalized",
+              "fieldName" : "normalized"
+            } 
+         ]
+        },
+        "ioConfig" : {
+          "type" : "realtime"
+        },
+        "tuningConfig" : {
+          "type" : "realtime",
+          "maxRowsInMemory" : "50000",
+          "intermediatePersistPeriod" : "PT1M",
+          "windowPeriod" : "PT1M",
+          "rejectionPolicy": {
+             "type": "serverTime"
+          }
+        }
+      },
+      "properties" : {
+        "task.partitions" : "1",
+        "task.replicants" : "1",
+        "topicPattern" : "traffic_output"
+      }
+    }
+  ],
+  "properties" : {
+    "zookeeper.connect" : "localhost",
+    "druid.discovery.curator.path" : "/druid/discovery",
+    "druid.selectors.indexing.serviceName" : "druid/overlord",
+    "commit.periodMillis" : "15000",
+    "consumer.numThreads" : "2",
+    "kafka.zookeeper.connect" : "localhost",
+    "kafka.group.id" : "tranquility-kafka",
+    "serialization.format" : "smile",
+    "druidBeam.taskLocator": "overlord",
+    "druidBeam.firehoseGracePeriod" : "PT30S"
+  }
+}

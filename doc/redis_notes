@@ -1,0 +1,5 @@
+1. Keeps in memory data and spills to disc
+2. Supports datastructures like set, list, array, hash
+3. Master-slave replication
+4. If Master goes down, another slave should be used as slave
+5. Redis server is a single big hash table with char sequences as keys and heterogenious values.

@@ -1,0 +1,31 @@
+
+
+1. Real time
+
+     Compute the D/S ratio every minute considering last 10 minutes of historical data. "windowing"
+     put this in redis cache as key,value (key=geohash, value = ratio)... TTL x minutes
+
+2. Batch
+
+   Run micro batches every 10 minutes and take events for last 10 minutes, and insert into druid.
+   Druid will run aggregation on hourly/daily basis
+
+
+
+---------
+I have to run every 10 minutes, seems like no use case of real time
+
+
+
+
+
+Questions -
+
+1. Every 10 minutes ????
+2. Lat lon - where is the exact data.
+3. One machine - deploy everything there...
+4. How the results will be served for real time.
+
+https://whynosql.com/2015/11/06/lambda-architecture-with-drui
+
+https://www.quora.com/How-do-technologies-like-Apache-Kafka-Storm-Spark-Druid-fit-in-a-data-processing-pipeline

@@ -1,0 +1,60 @@
+{
+  "type": "index",
+  "spec": {
+    "dataSchema": {
+      "dataSource": "supply_demand_daily",
+      "parser": {
+        "type": "string",
+        "parseSpec": {
+          "format": "json",
+          "timestampSpec": {
+            "column": "timestamp",
+            "format": "auto"
+          },
+          "dimensionsSpec": {
+            "dimensionExclusions": [],
+            "dimensions": [
+              "geohash",
+              "weather"
+            ],
+            "spatialDimensions": []
+          }
+        }
+      },
+      "metricsSpec": [
+        {
+          "type" : "doubleSum",
+          "name" : "supply",
+          "fieldName" : "supply"
+        },
+        {
+          "type" : "doubleSum",
+          "name" : "demand",
+          "fieldName" : "demand"
+        }
+      ],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "DAY",
+        "queryGranularity": "DAY",
+        "intervals": [
+          "2017-12-20/2018-01-31"
+        ]
+      }
+    },
+    "ioConfig": {
+      "type": "index",
+      "firehose": {
+        "type": "ingestSegment",
+        "dataSource"   : "supply_demand_data",
+        "interval" : "2017-12-20T00:00:00.000/2018-01-31T00:00:00.000"
+      }
+    },
+    "tuningConfig": {
+      "type": "index",
+      "targetPartitionSize": -1,
+      "rowFlushBoundary": 10,
+      "numShards": 1
+    }
+  }
+}
