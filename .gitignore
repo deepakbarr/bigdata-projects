@@ -6,6 +6,7 @@ pom.xml.next
 release.properties
 .idea/
 */.idea/
+*.iml
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
