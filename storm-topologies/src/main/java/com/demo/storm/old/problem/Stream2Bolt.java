@@ -29,7 +29,6 @@ public class Stream2Bolt extends BaseBasicBolt {
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
         declarer.declare(new Fields("key2", "value2"));
-
     }
 
 }

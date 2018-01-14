@@ -1,5 +1,6 @@
 package com.demo.storm.old.kafka;
 
+import com.demo.storm.excercise.StormUtil;
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
 import org.apache.storm.kafka.KafkaSpout;
@@ -21,14 +22,14 @@ public class Main {
         String ZK_CONNECT=args[1];
 
         TopologyBuilder topologyBuilder = new TopologyBuilder();
-        KafkaSpout kafkaSpout = MyKafkaStormUtil.getKafkaSpout(ZK_CONNECT, "storm_topic");
+        KafkaSpout kafkaSpout = StormUtil.getKafkaSpout(ZK_CONNECT, "storm_topic");
         topologyBuilder.setSpout("kafka-spout", kafkaSpout, 1);
 
 //        topologyBuilder.setBolt("window-bolt", new WindowBoltDemo().withWindow(new BaseWindowedBolt.Duration(5, TimeUnit.DAYS.SECONDS),
 //                new BaseWindowedBolt.Duration(1, TimeUnit.DAYS.SECONDS)), 1).shuffleGrouping("kafka-spout");
 //
         topologyBuilder.setBolt("print-bolt", new PrinterBolt(), 1).shuffleGrouping("kafka-spout");
-        topologyBuilder.setBolt("kafka-bolt", MyKafkaStormUtil.getKafkaBolt(BROKERS, "storm_output"), 1).shuffleGrouping("print-bolt");
+        topologyBuilder.setBolt("kafka-bolt", StormUtil.getKafkaBolt(BROKERS, "storm_output"), 1).shuffleGrouping("print-bolt");
         Config conf = new Config();
 //        conf.setDebug(true);
         conf.setMaxTaskParallelism(3);

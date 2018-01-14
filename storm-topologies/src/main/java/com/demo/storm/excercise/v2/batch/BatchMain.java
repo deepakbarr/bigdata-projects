@@ -1,6 +1,6 @@
 package com.demo.storm.excercise.v2.batch;
 
-import com.demo.storm.old.kafka.MyKafkaStormUtil;
+import com.demo.storm.excercise.StormUtil;
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
 import org.apache.storm.bolt.JoinBolt;
@@ -28,8 +28,8 @@ public class BatchMain {
         String ZK_CONNECT = args[1];
 
         TopologyBuilder topologyBuilder = new TopologyBuilder();
-        KafkaSpout demandSpout = MyKafkaStormUtil.getKafkaSpout(ZK_CONNECT, DEMAND_TOPIC);
-        KafkaSpout supplySpout = MyKafkaStormUtil.getKafkaSpout(ZK_CONNECT, SUPPLY_TOPIC);
+        KafkaSpout demandSpout = StormUtil.getKafkaSpout(ZK_CONNECT, DEMAND_TOPIC);
+        KafkaSpout supplySpout = StormUtil.getKafkaSpout(ZK_CONNECT, SUPPLY_TOPIC);
         topologyBuilder.setSpout("kafka-demand", demandSpout, 1);
         topologyBuilder.setSpout("kafka-supply", supplySpout, 1);
 
@@ -51,7 +51,7 @@ public class BatchMain {
 
         EnrichmentBolt enrichmentBolt = new EnrichmentBolt();
         topologyBuilder.setBolt("enrichment-bolt", enrichmentBolt, 1).shuffleGrouping("supply-demand-joiner");
-        topologyBuilder.setBolt("batch-kafka-bolt", MyKafkaStormUtil.getKafkaBolt(BROKERS, BATCH_OUTPUT_TOPIC), 1).shuffleGrouping("enrichment-bolt");
+        topologyBuilder.setBolt("batch-kafka-bolt", StormUtil.getKafkaBolt(BROKERS, BATCH_OUTPUT_TOPIC), 1).shuffleGrouping("enrichment-bolt");
 
         Config conf = new Config();
         conf.setMessageTimeoutSecs(600);

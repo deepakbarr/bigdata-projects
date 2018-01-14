@@ -1,7 +1,7 @@
 package com.demo.storm.old;
 
 import com.demo.storm.excercise.MyRedisDataMapper;
-import com.demo.storm.old.kafka.MyKafkaStormUtil;
+import com.demo.storm.excercise.StormUtil;
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
 import org.apache.storm.kafka.KafkaSpout;
@@ -37,8 +37,8 @@ public class TrafficMain {
         String ZK_CONNECT=args[1];
 
         TopologyBuilder topologyBuilder = new TopologyBuilder();
-        KafkaSpout kafkaSpout1 = MyKafkaStormUtil.getKafkaSpout(ZK_CONNECT, DEMAND_TOPIC);
-        KafkaSpout kafkaSpout2 = MyKafkaStormUtil.getKafkaSpout(ZK_CONNECT, SUPPLY_TOPIC);
+        KafkaSpout kafkaSpout1 = StormUtil.getKafkaSpout(ZK_CONNECT, DEMAND_TOPIC);
+        KafkaSpout kafkaSpout2 = StormUtil.getKafkaSpout(ZK_CONNECT, SUPPLY_TOPIC);
 
 //        topologyBuilder.setSpout("kafka-spout1", kafkaSpout1, 1);
         topologyBuilder.setSpout("kafka-spout2", kafkaSpout2, 1);
@@ -54,7 +54,7 @@ public class TrafficMain {
 //        PrinterBolt printerBolt = new PrinterBolt();
 //        topologyBuilder.setBolt("printer-bolt", printerBolt, 1).shuffleGrouping("processing-bolt");
 
-        topologyBuilder.setBolt("kafka-bolt", MyKafkaStormUtil.getKafkaBolt(BROKERS, OUTPUT_TOPIC), 1).shuffleGrouping("traffic-bolt");
+        topologyBuilder.setBolt("kafka-bolt", StormUtil.getKafkaBolt(BROKERS, OUTPUT_TOPIC), 1).shuffleGrouping("traffic-bolt");
 
 
         JedisPoolConfig poolConfig = new JedisPoolConfig.Builder()

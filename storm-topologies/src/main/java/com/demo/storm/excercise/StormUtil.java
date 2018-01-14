@@ -1,19 +1,24 @@
-package com.demo.storm.old.kafka;
+package com.demo.storm.excercise;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.storm.kafka.*;
 import org.apache.storm.kafka.bolt.KafkaBolt;
 import org.apache.storm.kafka.bolt.mapper.FieldNameBasedTupleToKafkaMapper;
 import org.apache.storm.kafka.bolt.selector.DefaultTopicSelector;
+import org.apache.storm.redis.bolt.RedisStoreBolt;
+import org.apache.storm.redis.common.config.JedisPoolConfig;
+import org.apache.storm.redis.common.mapper.RedisStoreMapper;
 import org.apache.storm.spout.SchemeAsMultiScheme;
 
 import java.util.Properties;
 import java.util.UUID;
 
+import static com.demo.storm.excercise.Constants.SUPPLY_DEMAND_KEY_PREFIX;
+
 /**
  * Created by dbarr on 12/18/17.
  */
-public class MyKafkaStormUtil {
+public class StormUtil {
 
     public static KafkaSpout getKafkaSpout(String zkString, String topic) {
         BrokerHosts hosts = new ZkHosts(zkString);
@@ -39,5 +44,21 @@ public class MyKafkaStormUtil {
                 .withTopicSelector(new DefaultTopicSelector(topic))
                 .withTupleToKafkaMapper(new FieldNameBasedTupleToKafkaMapper<>("key", "value"));
 
+    }
+
+    public static RedisStoreBolt getRedisStoreBolt(String keyPrefix) {
+
+        String host = System.getenv("REDIS_HOST");
+        String port = System.getenv("REDIS_PORT");
+
+        if (null == host || null == port) {
+            System.out.println("Environment variable REDIS.HOST and REDIS.PORT should be defined.");
+            System.exit(1);
+        }
+
+        JedisPoolConfig poolConfig = new JedisPoolConfig.Builder()
+                .setHost(host).setPort(Integer.parseInt(port)).build();
+        RedisStoreMapper storeMapper = new MyRedisDataMapper(keyPrefix);
+        return new RedisStoreBolt(poolConfig, storeMapper);
     }
 }

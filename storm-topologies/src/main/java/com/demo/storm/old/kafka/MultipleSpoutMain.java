@@ -1,5 +1,6 @@
 package com.demo.storm.old.kafka;
 
+import com.demo.storm.excercise.StormUtil;
 import org.apache.storm.Config;
 import org.apache.storm.LocalCluster;
 import org.apache.storm.kafka.KafkaSpout;
@@ -21,8 +22,8 @@ public class MultipleSpoutMain {
         String ZK_CONNECT = args[1];
 
         TopologyBuilder topologyBuilder = new TopologyBuilder();
-        KafkaSpout kafkaSpout1 = MyKafkaStormUtil.getKafkaSpout(ZK_CONNECT, "storm_topic1");
-        KafkaSpout kafkaSpout2 = MyKafkaStormUtil.getKafkaSpout(ZK_CONNECT, "storm_topic2");
+        KafkaSpout kafkaSpout1 = StormUtil.getKafkaSpout(ZK_CONNECT, "storm_topic1");
+        KafkaSpout kafkaSpout2 = StormUtil.getKafkaSpout(ZK_CONNECT, "storm_topic2");
 
         topologyBuilder.setSpout("kafka-spout1", kafkaSpout1, 1);
         topologyBuilder.setSpout("kafka-spout2", kafkaSpout2, 1);
@@ -30,7 +31,7 @@ public class MultipleSpoutMain {
         PrinterBolt printerBolt = new PrinterBolt();
 
         topologyBuilder.setBolt("printer-bolt", printerBolt, 1).shuffleGrouping("kafka-spout1").shuffleGrouping("kafka-spout2");
-        topologyBuilder.setBolt("kafka-bolt", MyKafkaStormUtil.getKafkaBolt(BROKERS, "storm_output"), 1).shuffleGrouping("printer-bolt");
+        topologyBuilder.setBolt("kafka-bolt", StormUtil.getKafkaBolt(BROKERS, "storm_output"), 1).shuffleGrouping("printer-bolt");
 
         Config conf = new Config();
         conf.setDebug(true);

@@ -16,5 +16,6 @@
         <module>data-util</module>
         <!--<module>geo-visualization</module>-->
     <module>geo-service</module>
+    <module>aws-demo</module>
   </modules>
 </project>

@@ -21,6 +21,14 @@ public class WeatherUtil {
 
     static {
         owm.setUnit(OWM.Unit.METRIC);
+        String redisHost = System.getenv("REDIS_HOST");
+        String redisPort = System.getenv("REDIS_PORT");
+
+        if (null == redisHost || null == redisPort) {
+            System.out.println("Environment variable REDIS.HOST and REDIS.PORT should be defined.");
+            System.exit(1);
+        }
+        redisClient = new Jedis(redisHost, Integer.parseInt(redisPort));
     }
 
     public static String getWeatherInfo(String geoHash) {
@@ -77,25 +85,31 @@ public class WeatherUtil {
     private static String extractInfo(CurrentWeather cwd) {
 
         StringBuilder sb = new StringBuilder();
+        System.out.println("cwd = " + cwd);
 
         if (cwd.hasMainData() && cwd.getMainData().hasTempMax() && cwd.getMainData().hasTempMin()) {
             // printing the max./min. temperature
-            sb.append(cwd.getMainData().getTemp() + "\'C");
+            sb.append("Temp.: "+cwd.getMainData().getTemp() + "\'C");
 
 //            if (cwd.hasWindData()) {
 //                double windSpeed = cwd.getWindData().getSpeed();
 //                System.out.println("windSpeed = " + windSpeed);
 //            }
-//            if (cwd.getMainData().hasHumidity()) {
-//                int humidity = cwd.getMainData().getHumidity();
-//                sb.append(cwd.getMainData().getHumidity() + "%");
-//                System.out.println("humidity = " + humidity);
-//            }
+            if (cwd.getMainData().hasHumidity()) {
+                int humidity = cwd.getMainData().getHumidity();
+                sb.append(", Hum.: "+cwd.getMainData().getHumidity() + "%");
+                System.out.println("Humidity = " + humidity);
+            }
         }
 
         return sb.length() > 0 ? sb.toString() : null;
     }
 
+
+    public static void main(String[] args) {
+        String geohash = "dr5rv6";
+        System.out.println("weather = " + getWeatherInfo(geohash));
+    }
 
 //    public static void main(String[] args) throws APIException, InterruptedException {
 //

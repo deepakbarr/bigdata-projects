@@ -1,6 +1,7 @@
 package com.geo.service;
 
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
@@ -21,6 +22,7 @@ public class ServiceMain extends Application<ServiceConfig> {
 
     @Override
     public void initialize(Bootstrap<ServiceConfig> bootstrap) {
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/maps"));
     }
 
     @Override

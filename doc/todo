@@ -1,9 +1,11 @@
-1. Create Artificial Data
-2. Stop/Start machine and see if it works
-3. Add comments and refactor
-
-
-
+To Study
+---------------
+<Add code comments>
+1. Redshift, dynamoDB - Visualization on it.
+2. Cache on amazon // counter of redis
+3. Kafka Mirror
+4. New different data...... 5-6 new geo hashes
+5. use s3, elasticcache, enrich weather info
 ------------------
 Deploy on AWS
 
