@@ -1,11 +1,10 @@
 To Study
 ---------------
 <Add code comments>
-1. Redshift, dynamoDB - Visualization on it.
-2. Cache on amazon // counter of redis
-3. Kafka Mirror
-4. New different data...... 5-6 new geo hashes
-5. use s3, elasticcache, enrich weather info
+1. Kafka Mirror
+2. New different data...... 5-6 new geo hashes
+3. Read input and output data from S3
+
 ------------------
 Deploy on AWS
 

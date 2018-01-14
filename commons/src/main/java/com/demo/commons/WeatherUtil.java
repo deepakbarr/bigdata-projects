@@ -89,7 +89,7 @@ public class WeatherUtil {
 
         if (cwd.hasMainData() && cwd.getMainData().hasTempMax() && cwd.getMainData().hasTempMin()) {
             // printing the max./min. temperature
-            sb.append("Temp.: "+cwd.getMainData().getTemp() + "\'C");
+            sb.append("T : "+cwd.getMainData().getTemp() + "\'C");
 
 //            if (cwd.hasWindData()) {
 //                double windSpeed = cwd.getWindData().getSpeed();
@@ -97,7 +97,7 @@ public class WeatherUtil {
 //            }
             if (cwd.getMainData().hasHumidity()) {
                 int humidity = cwd.getMainData().getHumidity();
-                sb.append(", Hum.: "+cwd.getMainData().getHumidity() + "%");
+                sb.append(", H : "+cwd.getMainData().getHumidity() + "%");
                 System.out.println("Humidity = " + humidity);
             }
         }

@@ -14,8 +14,12 @@
   <h3>Supply Demand Geo Visualization</h3>
   <div id="map"></div>
   <script>
-    var host = getUrlVars()["host"];
-    var gs_url = 'http://'+host+':8080/';
+    var l = document.createElement("a");
+    l.href = window.location.href;
+    var host=l.host;
+    // var host = getUrlVars()["host"];
+    var gs_url = 'http://' + host;
+
     console.log('GS url - ' + gs_url);
 
     var map, infowindow, clientId, intervalId;
@@ -32,23 +36,23 @@
 
       clientId = uuid();
       resetEndPoint();
-      intervalId=setInterval(addMarkers, 500);
+      intervalId = setInterval(addMarkers, 500);
       console.log("End of initMap");
     }
 
     function resetEndPoint() {
       var x = new XMLHttpRequest();
-      x.open("PATCH", gs_url + 'service/topic/supplydemand_output/reset?clientId=' + clientId);
+      x.open("PATCH", gs_url + '/service/topic/supplydemand_output/reset?clientId=' + clientId);
       x.send(null);
     }
 
     function addMarkers() {
-      var response = Get(gs_url + 'service/topic/supplydemand_output/next?clientId=' + clientId);
+      var response = Get(gs_url + '/service/topic/supplydemand_output/next?clientId=' + clientId);
 
       if (isEmpty(response)) {
         console.log("Response is empty");
         console.log("Clearing the interval");
-        clearInterval(intervalId);
+        // clearInterval(intervalId);
         return;
       }
 
@@ -103,14 +107,14 @@
         return v.toString(16);
       });
     }
+
     function getUrlVars() {
       var vars = {};
-      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m, key, value) {
         vars[key] = value;
       });
       return vars;
     }
-
   </script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDljLxlMe5-Fy_ZBh3z3yJbF5qWDfKCnJg&callback=initMap">
   </script>
