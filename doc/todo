@@ -4,6 +4,8 @@ To Study
 1. Kafka Mirror
 2. New different data...... 5-6 new geo hashes
 3. Read input and output data from S3
+4. Run druid aggregation job on s3
+5. Read storm and druid
 
 ------------------
 Deploy on AWS
@@ -30,17 +32,11 @@ Commands for AWS setup
 
 New things to try
 ------------------
-0. Storm cleanup
-1. Joining of streams
-2. java script maps
 3. presentation/ppt
 4. generate datasets with more data in druid
 5. finalize colors
 new
-6. write main method in visualization classes
-7. use some env variable for IP on AWS
-8. revisit batch version 2
-9. why realtime tasks are taking so long to finish
+
 
 ----- Flume - read from kafka and write to file as well as druid
 event time vs processing time

@@ -19,9 +19,9 @@ public class TrafficDataUtil extends DataUtil {
 
     private static final String SEPARATOR = ",";
     private static final String ID_PREFIX = "DR";
-    private static final Long INITIAL_ID = 22000l;
-    private static final String OUTPUT_FILE = "/Users/dbarr/Garbage/data/supply_data_traffic_v2.csv";
-    private static final String INPUT_FILE = "/Users/dbarr/coderep_2/Workspace_bigdata/bigdata-projects/my-util/src/main/resources/test_set2";
+    private static final Long INITIAL_ID = 44000l;
+    private static final String OUTPUT_FILE = "/Users/dbarr/Garbage/data/supply_data_traffic_v3.csv";
+    private static final String INPUT_FILE = "/Users/dbarr/coderep_2/Workspace_bigdata/bigdata-projects/data-util/src/main/resources/test_set3";
     public static final String ID_KEY = "driver_id";
     private static Map<String, List<String>> geoMap = new HashMap();
     private static final int totalDrivers = 23;

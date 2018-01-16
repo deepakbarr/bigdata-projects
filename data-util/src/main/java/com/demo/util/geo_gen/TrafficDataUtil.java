@@ -14,7 +14,7 @@ import java.util.*;
 /**
  * Created by dbarr on 12/22/17.
  */
-public class TrafficDataUtil extends DataUtil {
+public class  TrafficDataUtil extends DataUtil {
 
     private static final String SEPARATOR = ",";
     private static final String ID_PREFIX = "DR";
@@ -35,10 +35,12 @@ public class TrafficDataUtil extends DataUtil {
         int count = 0;
         for (String key : geoMap.keySet()) {
             if (geoMap.get(key).size() > 5) {
-                if (count++ < 100)
+//                if (count < 100)
+                    count++;
                     System.out.println(String.format("%s^%s", key, geoMap.get(key)));
             }
         }
+        System.out.println("count = " + count);
 
 //        new Writer().write(OUTPUT_FILE, transformed);
     }

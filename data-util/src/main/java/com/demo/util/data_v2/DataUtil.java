@@ -18,9 +18,9 @@ public class DataUtil {
 
     private static final String SEPARATOR = ",";
     private static final String ID_PREFIX = "CT";
-    private static final Long INITIAL_ID = 11000l;
-    private static final String OUTPUT_FILE = "/Users/dbarr/Garbage/data/demand_data_v2.csv";
-    private static final String INPUT_FILE = "/Users/dbarr/coderep_2/Workspace_bigdata/bigdata-projects/my-util/src/main/resources/test_set2";
+    private static final Long INITIAL_ID = 33000l;
+    private static final String OUTPUT_FILE = "/Users/dbarr/Garbage/data/demand_data_v3.csv";
+    private static final String INPUT_FILE = "/Users/dbarr/coderep_2/Workspace_bigdata/bigdata-projects/data-util/src/main/resources/test_set3";
     public static final String ID_KEY = "customer_id";
     private static Map<String, List<String>> geoMap = new HashMap();
     static final double rangeMin = 0.3;
