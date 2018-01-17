@@ -36,15 +36,15 @@ public class KafkaManager {
 
         String key = topic + "." + clientId;
         if (!kafkaPollers.containsKey(key)) {
-            System.out.println("***************** Key Does not Exists  = " + key);
+            System.out.println("Key Does not Exists  = " + key);
             kafkaPollers.put(key, new KafkaPoller(kafkaBroker, topic, clientId));
         }
         else {
-            System.out.println("***************** Key Exists  = " + key);
+            System.out.println("Key Exists  = " + key);
         }
-        System.out.println("********** kafkaPollers.size() = " + kafkaPollers.size());
+
         Map<String, String> records = kafkaPollers.get(key).getNewMessages();
-        System.out.println(topic + " : Number of records polled : " + records.size());
+        System.out.println("Number of records received : "+records.size());
 
         if (topic.equals(Topics.supplydemand_output.toString()))
             return DataUtil.toSupplyDemandGeoPoint(records);

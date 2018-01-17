@@ -85,7 +85,7 @@ public class WeatherUtil {
     private static String extractInfo(CurrentWeather cwd) {
 
         StringBuilder sb = new StringBuilder();
-        System.out.println("cwd = " + cwd);
+//        System.out.println("cwd = " + cwd);
 
         if (cwd.hasMainData() && cwd.getMainData().hasTempMax() && cwd.getMainData().hasTempMin()) {
             // printing the max./min. temperature
